@@ -15,8 +15,6 @@ public class CourseModel {
   private String title;
   private int courseCode;
   private String description;
-  private int year;
-  private int sem;
   private int courseId;
 
   public CourseModel() {}
@@ -27,9 +25,6 @@ public class CourseModel {
     this.title = title;
     this.courseCode = courseCode;
     this.description = description;
-    this.year = year;
-    this.sem = sem;
-    this.courseId = courseId;
   }
 
   public String getTitle() {
@@ -70,33 +65,11 @@ public class CourseModel {
   }
 
 
-  public int getYear() {
-    return year;
-  }
-
-  public void setYear(int year) {
-    this.year = year;
-  }
-
-  public int getSem() {
-    return sem;
-  }
-
-  public void setSem(int sem) {
-    this.sem = sem;
-  }
-
   public int getCourseId() {
     return courseId;
   }
 
   public void setCourseId(int courseId) {
-    this.courseId = courseId;
-  }
-
-  public CourseModel(int year, int sem, int courseId) {
-    this.year = year;
-    this.sem = sem;
     this.courseId = courseId;
   }
 

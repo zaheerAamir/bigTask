@@ -39,4 +39,33 @@ public class CourseDto {
 
   }
 
+  public static class createInstanceDto implements Serializable {
+
+    private int sem;
+    private int year;
+
+    public int getSem() {
+      return sem;
+    }
+
+    public void setSem(int sem) {
+      this.sem = sem;
+    }
+
+    public int getYear() {
+      return year;
+    }
+
+    public void setYear(int year) {
+      this.year = year;
+    }
+
+    public createInstanceDto(int sem, int year) {
+      this.sem = sem;
+      this.year = year;
+    }
+
+
+  }
+
 }

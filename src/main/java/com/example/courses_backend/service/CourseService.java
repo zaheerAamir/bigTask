@@ -37,6 +37,21 @@ public class CourseService {
     return courseRepository.save(course);
   }
 
+
+  public CourseModel getCourseByIdService(int id) {
+    if (courseRepository.findByCourseId(id) == null) {
+      throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid Id!");
+    }
+    return courseRepository.findByCourseId(id);
+  }
+
+  public void deleteCourseByIdService(int id) {
+    if (courseRepository.findByCourseId(id) == null) {
+      throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid Id!");
+    }
+    courseRepository.delete(courseRepository.findByCourseId(id));
+  }
+
   public void validateCourse(String course, String propName) {
     if (course == null || course.isEmpty()) {
       throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
@@ -61,15 +76,7 @@ public class CourseService {
       throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
           "Course " + propName + " cannot be 0 or less than 0");
     }
-    if (propName == "Sem" && course >= 10) {
-      throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Sem cannot be greater that 9!");
-    }
-    if (propName == "Sem" && String.valueOf(course).length() > 1) {
-      throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid Value of Sem!");
-    }
-    if (propName == "Year" && String.valueOf(course).length() > 4) {
-      throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid Value of Year!");
-    }
+
     if (propName == "CourseCode" && courseRepository.existsByCourseCode(course)) {
       throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
           "CourseCode " + course + " already exists!");
@@ -81,21 +88,6 @@ public class CourseService {
     Random random = new Random();
     int id = 1000 + random.nextInt(9000);
     return id;
-  }
-
-
-  public CourseModel getCourseByIdService(int id) {
-    if (courseRepository.findByCourseId(id) == null) {
-      throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid Id!");
-    }
-    return courseRepository.findByCourseId(id);
-  }
-
-  public void deleteCourseByIdService(int id) {
-    if (courseRepository.findByCourseId(id) == null) {
-      throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid Id!");
-    }
-    courseRepository.delete(courseRepository.findByCourseId(id));
   }
 
 }

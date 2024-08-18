@@ -50,8 +50,6 @@ public class CourseController {
       courseModel.setTitle(course.getTitle());
       courseModel.setDescription(course.getDescription());
       courseModel.setCourseCode(course.getCourseCode());
-      courseModel.setYear(0);
-      courseModel.setSem(0);
       courseModel.setCourseId(0);
 
       courseService.createCourseService(courseModel);
