@@ -95,11 +95,12 @@ public class CourseController {
       @PathVariable("id") int id) {
 
     Map<String, Object> response = new HashMap<>();
-    HttpStatus status = HttpStatus.OK;
+    HttpStatus status;
 
     try {
       courseService.deleteCourseByIdService(id);
       response.put("message", "Course deleted Successfully!");
+      status = HttpStatus.NO_CONTENT;
 
     } catch (Exception e) {
       response.put("message", "An error occurred while creating the course");

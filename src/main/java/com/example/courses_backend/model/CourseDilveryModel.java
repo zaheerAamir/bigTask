@@ -17,6 +17,7 @@ public class CourseDilveryModel {
   private int courseId;
 
   public CourseDilveryModel(int courseId, int sem, int year) {
+    this.courseId = courseId;
     this.sem = sem;
     this.year = year;
   }

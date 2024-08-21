@@ -35,6 +35,12 @@ public class CourseDileveryService {
     validateCourseInt(course.getSem(), "Sem");
     validateCourseInt(course.getYear(), "Year");
     validateCourseInt(course.getCourseId(), "CourseID");
+
+    if (courseDileveryRepository.findByCourseIdAndYearAndSem(course.getCourseId(), course.getYear(),
+        course.getSem()) != null) {
+      throw new ResponseStatusException(HttpStatus.CONFLICT, "Instance already exists!");
+    }
+
     return courseDileveryRepository.save(course);
   }
 
@@ -55,7 +61,7 @@ public class CourseDileveryService {
 
   }
 
-  public List<Map<String, Object>> getInstanceService() {
+  public List<Map<String, Object>> getInstancesService() {
 
     List<CourseDilveryModel> courseDilverys = courseDileveryRepository.findAll();
 
@@ -71,6 +77,7 @@ public class CourseDileveryService {
       response.put("title", course.getTitle());
       response.put("Year", courseDilvery.getYear());
       response.put("Sem", courseDilvery.getSem());
+      response.put("Description", course.getDescription());
       response.put("CourseCode", course.getCourseCode());
 
       responseList.add(response);
@@ -78,6 +85,61 @@ public class CourseDileveryService {
     });
 
     return responseList;
+
+  }
+
+  public Map<String, Object> getInstanceService(int year, int sem) {
+
+    CourseDilveryModel courseInstance = courseDileveryRepository.findByYearAndSem(year, sem);
+    if (courseInstance == null) {
+      throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid Year or sem!");
+    }
+
+    CourseModel course = courseRepository.findByCourseId(courseInstance.getCourseId());
+
+    Map<String, Object> response = new HashMap<>();
+
+    response.put("title", course.getTitle());
+    response.put("Year", courseInstance.getYear());
+    response.put("Sem", courseInstance.getSem());
+    response.put("Description", course.getDescription());
+    response.put("CourseCode", course.getCourseCode());
+
+    return response;
+
+  }
+
+  public Map<String, Object> getDetailedInstanceService(int id, int year, int sem) {
+
+    CourseDilveryModel courseInstance =
+        courseDileveryRepository.findByCourseIdAndYearAndSem(id, year, sem);
+    if (courseInstance == null) {
+      throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid CourseID or Year or sem!");
+    }
+
+    CourseModel course = courseRepository.findByCourseId(courseInstance.getCourseId());
+
+    Map<String, Object> response = new HashMap<>();
+
+    response.put("title", course.getTitle());
+    response.put("Year", courseInstance.getYear());
+    response.put("Sem", courseInstance.getSem());
+    response.put("Description", course.getDescription());
+    response.put("CourseCode", course.getCourseCode());
+
+    return response;
+
+  }
+
+  public void deleteInstanceService(int id, int year, int sem) {
+
+    CourseDilveryModel courseInstance =
+        courseDileveryRepository.findByCourseIdAndYearAndSem(id, year, sem);
+    if (courseInstance == null) {
+      throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid CourseID or Year or sem!");
+    }
+
+    courseDileveryRepository.delete(courseInstance);
 
   }
 
